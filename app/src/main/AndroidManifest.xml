@@ -9,12 +9,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LostAndFound">
-        <activity android:name=".Register"
-                   android:exported="true"></activity>
-        <activity android:name=".Login"
-                android:exported="true"></activity>
-        <activity android:name=".MainActivity"
-                android:exported="true">
+        <activity
+            android:name=".ReceivedNotificationsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SentItemsActivity"
+            android:exported="true"
+            android:label="@string/title_activity_sent_items"
+            android:theme="@style/Theme.LostAndFound.NoActionBar" />
+        <activity
+            android:name=".MainMenuActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Register"
+            android:exported="true" />
+        <activity
+            android:name=".Login"
+            android:exported="true" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
