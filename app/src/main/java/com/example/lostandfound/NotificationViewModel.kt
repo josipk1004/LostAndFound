@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.map
 import java.util.*
 
 class NotificationViewModel(private val dao: NotificationDao) : ViewModel() {
-    val allNotifications: Flow<PagingData<NotificationListItem>> = Pager(
+    val allNotifications: Flow<PagingData<NotificationListItem.Item>> = Pager(
         config = PagingConfig(
             pageSize = 10,
             enablePlaceholders = true,
@@ -21,19 +21,19 @@ class NotificationViewModel(private val dao: NotificationDao) : ViewModel() {
         .map { pagingData ->
             pagingData
                 .map { notification -> NotificationListItem.Item(notification) }
-                .insertSeparators { before: NotificationListItem?, after: NotificationListItem? ->
-                    if (before == null && after == null) {
-                        null
-                    } else if (after == null) {
-                        null
-                    } else if (before == null) {
-                        NotificationListItem.Separator(after.title.first())
-                    } else if (!before.title.first().equals(after.title.first(), ignoreCase = true)) {
-                        NotificationListItem.Separator(after.title.first())
-                    } else {
-                        null
-                    }
-                }
+//                .insertSeparators { before: NotificationListItem?, after: NotificationListItem? ->
+//                    if (before == null && after == null) {
+//                        null
+//                    } else if (after == null) {
+//                        null
+//                    } else if (before == null) {
+//                        NotificationListItem.Separator(after.title.first())
+//                    } else if (!before.title.first().equals(after.title.first(), ignoreCase = true)) {
+//                        NotificationListItem.Separator(after.title.first())
+//                    } else {
+//                        null
+//                    }
+//                }
         }
         .cachedIn(viewModelScope)
 

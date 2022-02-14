@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 
-class NotificationAdapter : PagingDataAdapter<NotificationListItem, NotificationViewHolder>(diffCallback) {
+class NotificationAdapter : PagingDataAdapter<NotificationListItem.Item, NotificationViewHolder>(diffCallback) {
     override fun onBindViewHolder(holder: NotificationViewHolder, position: Int) {
         holder.bindTo(getItem(position))
     }
@@ -14,23 +14,23 @@ class NotificationAdapter : PagingDataAdapter<NotificationListItem, Notification
     }
 
     companion object {
-        val diffCallback = object : DiffUtil.ItemCallback<NotificationListItem>() {
+        val diffCallback = object : DiffUtil.ItemCallback<NotificationListItem.Item>() {
             override fun areItemsTheSame(
-                oldItem: NotificationListItem,
-                newItem: NotificationListItem
+                oldItem: NotificationListItem.Item,
+                newItem: NotificationListItem.Item
             ): Boolean {
-                return if (oldItem is NotificationListItem.Item && newItem is NotificationListItem.Item) {
-                    oldItem.notification == newItem.notification
-                } else if (oldItem is NotificationListItem.Separator && newItem is NotificationListItem.Separator) {
-                    oldItem.title == newItem.title
-                } else {
+//                return if (oldItem is NotificationListItem.Item && newItem is NotificationListItem.Item) {
+                  return oldItem.notification == newItem.notification
+//                } else if (oldItem is NotificationListItem.Separator && newItem is NotificationListItem.Separator) {
+//                    oldItem.title == newItem.title
+//                } else {
                     oldItem == newItem
-                }
+//                }
             }
 
             override fun areContentsTheSame(
-                oldItem: NotificationListItem,
-                newItem: NotificationListItem
+                oldItem: NotificationListItem.Item,
+                newItem: NotificationListItem.Item
             ): Boolean {
                 return oldItem == newItem
             }
