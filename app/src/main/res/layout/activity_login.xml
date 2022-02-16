@@ -23,38 +23,43 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Username:" />
+            android:text="@string/username" />
 
         <EditText
-            android:id="@+id/userName"
+            android:id="@+id/usernameLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:hint="@string/enter_username"
+            android:inputType="textPersonName"
+            android:minHeight="50dp"
+            tools:ignore="TextContrastCheck"/>
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Password" />
+            android:text="@string/passwordLogin" />
 
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/passwordLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPassword" />
+            android:hint="@string/enter_password"
+            android:inputType="textPassword"
+            android:minHeight="50dp"/>
 
         <Button
-            android:id="@+id/loginB"
+            android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="LOGIN" />
+            android:text="@string/login" />
 
         <Button
-            android:id="@+id/register"
+            android:id="@+id/registerButtonLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="REGISTER" />
+            android:text="@string/register" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
