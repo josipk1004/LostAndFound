@@ -16,65 +16,90 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Name:" />
+            android:text="@string/first_name" />
 
         <EditText
-            android:id="@+id/Name"
+            android:id="@+id/firstNameRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:hint="@string/enter_first_name"
+            android:inputType="textPersonName"
+            android:minHeight="48dp" />
 
         <TextView
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Last name:" />
+            android:text="@string/last_name" />
 
         <EditText
-            android:id="@+id/LastName"
+            android:id="@+id/lastNameRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:hint="@string/enter_last_name"
+            android:inputType="textPersonName"
+            android:minHeight="48dp" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/username" />
+
+        <EditText
+            android:id="@+id/usernameRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/enter_username"
+            android:inputType="textPersonName"
+            android:minHeight="48dp" />
 
         <TextView
             android:id="@+id/eMail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="E-mail" />
+            android:text="@string/e_mail" />
 
         <EditText
-            android:id="@+id/emailReg"
+            android:id="@+id/emailRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textEmailAddress" />
+            android:hint="@string/enter_e_mail"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp" />
 
         <TextView
             android:id="@+id/passwordReg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Password" />
+            android:text="@string/password" />
 
         <EditText
-            android:id="@+id/PasswordRegEdit"
+            android:id="@+id/passwordRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPassword" />
+            android:hint="@string/enter_password"
+            android:inputType="textPassword"
+            android:minHeight="48dp" />
 
         <Button
-            android:id="@+id/regButt"
+            android:id="@+id/registerButtonRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="REGISTER" />
+            android:text="@string/register" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
