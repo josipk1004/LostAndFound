@@ -5,7 +5,6 @@ import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.lostandfound.entity.ShortNotification
-import com.example.lostandfound.net.RestFactory
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -29,5 +28,11 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, AllNotifications::class.java)
             startActivity(intent)
         }
+
+        goToRegister()
+    }
+
+    fun goToRegister(){
+        startActivity(Intent(this, Register::class.java))
     }
 }
