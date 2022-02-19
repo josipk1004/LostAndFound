@@ -10,7 +10,6 @@ import com.example.lostandfound.entity.Data
 import com.example.lostandfound.net.retrofit.apiClient.ApiClient
 import com.example.lostandfound.net.retrofit.model.RegisterRequest
 import com.example.lostandfound.net.retrofit.model.RegisterResponse
-import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Response
 
@@ -22,9 +21,9 @@ class Register : AppCompatActivity() {
 
         val button = findViewById<Button>(R.id.registerButtonRegister)
 
-        button.setOnClickListener({
+        button.setOnClickListener{
             register()
-        })
+        }
     }
 
     fun register(){

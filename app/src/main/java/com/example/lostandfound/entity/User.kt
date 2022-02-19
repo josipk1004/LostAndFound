@@ -4,10 +4,10 @@ import java.io.Serializable
 
 data class User(
     var id: Long? = null,
-    var firstName: String = "",
-    var lastName: String = "",
-    var email: String = "",
-    var username: String = "",
-    var password: String = "",
-    var notifications: MutableList<Notification>? = null
+    val firstName: String = "",
+    val lastName: String = "",
+    val email: String = "",
+    val username: String = "",
+    val password: String = "",
+    val notifications: List<Notification>? = null
     ) : Serializable
