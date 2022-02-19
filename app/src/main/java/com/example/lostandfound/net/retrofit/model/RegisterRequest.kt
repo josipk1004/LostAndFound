@@ -5,15 +5,15 @@ import com.google.gson.annotations.SerializedName
 class RegisterRequest(firstName: String, lastName: String?, email: String, username: String,
                       password: String){
     @SerializedName("firstName")
-    val firstName: String? = firstName
+    var firstName: String? = firstName
     @SerializedName("lastName")
-    val lastName: String? = lastName
+    var lastName: String? = lastName
     @SerializedName("email")
-    val email: String? = email
+    var email: String? = email
     @SerializedName("username")
-    val username: String? = username
+    var username: String? = username
     @SerializedName("password")
-    val password: String? = password
+    var password: String? = password
 
 
 }
