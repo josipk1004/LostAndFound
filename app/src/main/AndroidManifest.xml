@@ -13,13 +13,13 @@
         android:theme="@style/Theme.LostAndFound">
         <activity
             android:name=".AllNotifications"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".MyNotifications"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".NewNotification"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".Register"
             android:exported="true" />
