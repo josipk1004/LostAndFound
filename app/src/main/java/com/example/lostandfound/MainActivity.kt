@@ -29,10 +29,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        goToRegister()
+        goToLogin()
     }
 
-    fun goToRegister(){
-        startActivity(Intent(this, Register::class.java))
+    fun goToLogin(){
+        startActivity(Intent(this, Login::class.java))
     }
 }

@@ -9,5 +9,5 @@ data class User(
     var email: String = "",
     var username: String = "",
     var password: String = "",
-    var notifications: MutableList<Notification>? = null
+    var notifications: List<Notification>? = null
     ) : Serializable

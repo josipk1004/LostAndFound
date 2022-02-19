@@ -21,9 +21,9 @@ class Register : AppCompatActivity() {
 
         val button = findViewById<Button>(R.id.registerButtonRegister)
 
-        button.setOnClickListener({
+        button.setOnClickListener{
             register()
-        })
+        }
     }
 
     fun register(){
