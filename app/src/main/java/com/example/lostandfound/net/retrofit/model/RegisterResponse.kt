@@ -6,17 +6,17 @@ import com.google.gson.annotations.SerializedName
 class RegisterResponse {
 
     @SerializedName("id")
-    val id: Long? = null
+    var id: Long? = null
     @SerializedName("firstName")
-    val firstName: String? = null
+    var firstName: String? = null
     @SerializedName("lastName")
-    val lastName: String? = null
+    var lastName: String? = null
     @SerializedName("email")
-    val email: String? = null
+    var email: String? = null
     @SerializedName("username")
-    val username: String? = null
+    var username: String? = null
     @SerializedName("password")
-    val password: String? = null
+    var password: String? = null
     @SerializedName("notifications")
-    val notifications: List<Notification>? = null
+    var notifications: List<Notification>? = null
 }
