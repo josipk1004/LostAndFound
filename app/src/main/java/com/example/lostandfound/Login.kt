@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.example.lostandfound.entity.Data
+import com.example.lostandfound.entity.User
 import com.example.lostandfound.net.retrofit.apiClient.ApiClient
 import com.example.lostandfound.net.retrofit.model.LoginRequest
 import com.example.lostandfound.net.retrofit.model.LoginResponse
@@ -39,14 +41,18 @@ class Login : AppCompatActivity() {
             }
 
             val loginRequest = makeLoginRequest()
-            ApiClient.create().loginUser(loginRequest)
-                .enqueue(object: Callback<LoginResponse> {
+            val serviceCall = Data.service.loginUser(loginRequest)
+            serviceCall.enqueue(object: Callback<LoginResponse> {
                     override fun onResponse(
                         call: Call<LoginResponse>?,
                         response: Response<LoginResponse>?
                     ) {
                         if(response?.isSuccessful == true){
                             val loginResponse: LoginResponse = response.body()
+                            val user: User = User(loginResponse.id, loginResponse.firstName,
+                                loginResponse.lastName, loginResponse.email, loginResponse.username,
+                                loginResponse.password, loginResponse.notifications)
+                            Data.setUser(user)
                             startActivity(Intent(this@Login, MainActivity::class.java))
                         }else{
                             val text = "An error occurred, please try again!"
