@@ -20,7 +20,6 @@ interface ApiClient {
     @POST("/registerUser")
     fun registerUser(@Body reg: RegisterRequest): Call<RegisterResponse>
 
-    @FormUrlEncoded
     @POST("/loginUser")
     fun loginUser(@Body log: LoginRequest): Call<LoginResponse>
 
@@ -30,7 +29,7 @@ interface ApiClient {
 
 
     companion object {
-        val BASE_URL = "http://10.7.242.131:8080/"
+        val BASE_URL = "http://192.168.180.43:8080/"
 
         fun create(): ApiClient{
             val retrofit = Retrofit.Builder()

@@ -10,32 +10,38 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     // data:
-    val service = ApiClient.create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if(Data.loggedUser.id == null)
-            goToLogin()
-
-        nameMain.setText(Data.loggedUser.firstName + "!")
 
         newNotifButton.setOnClickListener {
             val intent = Intent(this@MainActivity, NewNotification::class.java)
             startActivity(intent)
         }
 
-        myNotificationsbutton.setOnClickListener {
+   /*     myNotificationsbutton.setOnClickListener {
             val intent = Intent(this@MainActivity, MyNotifications::class.java)
             startActivity(intent)
-        }
+        } */
 
         allNotifications.setOnClickListener {
             val intent = Intent(this@MainActivity, AllNotifications::class.java)
             startActivity(intent)
         }
 
+        if(Data.loggedUser == null)
+            goToLogin()
+        nameMain.setText(Data.loggedUser?.firstName + "!")
+
+    }
+
+    override fun onResume(){
+        super.onResume()
+        if(Data.loggedUser == null)
+            goToLogin()
+        nameMain.setText(Data.loggedUser?.firstName + "!")
     }
 
     fun goToLogin(){

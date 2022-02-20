@@ -9,8 +9,8 @@ data class ShortNotification(
 ) : Serializable {
     constructor(c: Notification) : this(
         c.id,
-        c.title,
-        c.subject
+        c.title!!,
+        c.subject!!
     )
 
     override fun toString(): String {

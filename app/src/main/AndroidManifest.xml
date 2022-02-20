@@ -16,9 +16,6 @@
             android:name=".AllNotifications"
             android:exported="false" />
         <activity
-            android:name=".MyNotifications"
-            android:exported="false" />
-        <activity
             android:name=".NewNotification"
             android:exported="false" />
         <activity
