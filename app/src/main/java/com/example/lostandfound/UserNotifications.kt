@@ -8,18 +8,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lostandfound.entity.Data
 import com.example.lostandfound.entity.Notification
 import com.example.lostandfound.entity.ShortNotification
+import com.example.lostandfound.net.retrofit.model.NotificationResponse
 import kotlinx.android.synthetic.main.activity_user_notifications.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.LocalDate
 
-class AllNotifications : AppCompatActivity() {
+class UserNotifications : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_all_notifications)
+        setContentView(R.layout.activity_user_notifications)
 
-        val call = Data.service.getAllNotifications(Data.loggedUser.username)
-        call.enqueue(object: Callback<List<Notification>> {
+        val call = Data.service.getUserNotifications(Data.loggedUser.username)
+        call.enqueue(object: Callback<List<Notification>>{
             override fun onResponse(
                 call: Call<List<Notification>>?,
                 response: Response<List<Notification>>
@@ -51,16 +53,23 @@ class AllNotifications : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@UserNotifications)
             adapter = NotificationsAdapter(notifications)
         }*/
-        userNotificationsRecyclerView.layoutManager = LinearLayoutManager(this@AllNotifications)
+        userNotificationsRecyclerView.layoutManager = LinearLayoutManager(this@UserNotifications)
         var adapter = NotificationsAdapter(notifications)
         userNotificationsRecyclerView.adapter = adapter
 
         adapter.setOnItemClickListener(object: NotificationsAdapter.OnItemClickListener{
             override fun onItemClick(position: Int) {
-                val intent = Intent(this@AllNotifications, NotificationDetails::class.java)
+                val intent = Intent(this@UserNotifications, UserNotificationDetails::class.java)
                     .putExtra("id", notifications[position].id!!)
                 startActivity(intent)
             }
         })
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if(Data.loggedUser.id == null)
+            startActivity(Intent(this, Login::class.java))
     }
 }

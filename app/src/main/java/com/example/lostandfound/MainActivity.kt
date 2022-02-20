@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.lostandfound.entity.Data
-import com.example.lostandfound.entity.ShortNotification
 import com.example.lostandfound.net.retrofit.apiClient.ApiClient
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -27,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         myNotificationsbutton.setOnClickListener {
-            val intent = Intent(this@MainActivity, MyNotifications::class.java)
+            val intent = Intent(this@MainActivity, UserNotifications::class.java)
             startActivity(intent)
         }
 
@@ -40,5 +39,12 @@ class MainActivity : AppCompatActivity() {
 
     fun goToLogin(){
         startActivity(Intent(this, Login::class.java))
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if(Data.loggedUser.id == null)
+            startActivity(Intent(this@MainActivity, Login::class.java))
     }
 }

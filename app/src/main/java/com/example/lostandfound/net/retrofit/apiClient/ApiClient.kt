@@ -1,8 +1,8 @@
 package com.example.lostandfound.net.retrofit.apiClient
 
+import com.example.lostandfound.entity.Notification
 import com.example.lostandfound.net.retrofit.model.LoginRequest
 import com.example.lostandfound.net.retrofit.model.LoginResponse
-import com.example.lostandfound.entity.Data
 import com.example.lostandfound.net.retrofit.model.NotificationRequest
 import com.example.lostandfound.net.retrofit.model.NotificationResponse
 import com.example.lostandfound.net.retrofit.model.RegisterRequest
@@ -10,17 +10,13 @@ import com.example.lostandfound.net.retrofit.model.RegisterResponse
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface ApiClient {
 
     @POST("/registerUser")
     fun registerUser(@Body reg: RegisterRequest): Call<RegisterResponse>
 
-    @FormUrlEncoded
     @POST("/loginUser")
     fun loginUser(@Body log: LoginRequest): Call<LoginResponse>
 
@@ -28,6 +24,14 @@ interface ApiClient {
     fun pushNotification(@Body notif: NotificationRequest, @Path("username") username: String)
     : Call<NotificationResponse>
 
+    @GET("/{username}/notifications")
+    fun getUserNotifications(@Path("username") username: String): Call<List<Notification>>
+
+    @GET("/notifications/{id}")
+    fun getNotification(@Path("id") id: Long): Call<NotificationResponse>
+
+    @GET("/{username}/allNotifs")
+    fun getAllNotifications(@Path("username") username: String): Call<List<Notification>>
 
     companion object {
         val BASE_URL = "http://10.7.242.131:8080/"

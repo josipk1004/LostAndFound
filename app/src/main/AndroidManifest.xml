@@ -2,21 +2,27 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.lostandfound">
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
-        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.LostAndFound">
+        android:theme="@style/Theme.LostAndFound"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".UserNotificationDetails"
+            android:exported="false" />
+        <activity
+            android:name=".NotificationDetails"
+            android:exported="false" />
         <activity
             android:name=".AllNotifications"
             android:exported="false" />
         <activity
-            android:name=".MyNotifications"
+            android:name=".UserNotifications"
             android:exported="false" />
         <activity
             android:name=".NewNotification"
