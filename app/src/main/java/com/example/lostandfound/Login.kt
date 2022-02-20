@@ -20,8 +20,6 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val main = Intent(this , MainActivity::class.java)
-
         registerButtonLogin.setOnClickListener {
             startActivity(Intent(this, Register::class.java))
         }
@@ -80,4 +78,10 @@ class Login : AppCompatActivity() {
         return LoginRequest(username, password)
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        if(Data.loggedUser.id != null)
+            startActivity(Intent(this@Login, MainActivity::class.java))
+    }
 }

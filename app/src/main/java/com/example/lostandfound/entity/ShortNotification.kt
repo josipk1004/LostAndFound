@@ -14,6 +14,6 @@ data class ShortNotification(
     )
 
     override fun toString(): String {
-        return title + "\n" + subject
+        return title.uppercase() + "\n" + subject
     }
 }
