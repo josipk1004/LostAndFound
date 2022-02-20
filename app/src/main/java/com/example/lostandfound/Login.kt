@@ -53,8 +53,14 @@ class Login : AppCompatActivity() {
                             Data.setUser(user)
                             startActivity(Intent(this@Login, MainActivity::class.java))
                         }else{
-                            val text = "An error occurred, please try again!"
-                            Toast.makeText(applicationContext, text, Toast.LENGTH_LONG).show()
+                            if(response?.code() == 404){
+                                val text = "Wrong username or password, please try again or register!"
+                                Toast.makeText(applicationContext, text, Toast.LENGTH_SHORT)
+                            }
+                            else {
+                                val text = "An error occurred, please try again!"
+                                Toast.makeText(applicationContext, text, Toast.LENGTH_LONG).show()
+                            }
                         }
                     }
 

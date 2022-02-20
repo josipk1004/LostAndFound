@@ -31,7 +31,7 @@ class NewNotification : AppCompatActivity() {
         if(notifReq == null)
             return
 
-        val call = Data.service.pushNotification(notifReq, Data.loggedUser.username)
+        val call = Data.service.pushNotification(notifReq, Data.loggedUser!!.username)
 
         call.enqueue(object: Callback<NotificationResponse>{
             override fun onResponse(

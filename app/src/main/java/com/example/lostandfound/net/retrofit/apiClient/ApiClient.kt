@@ -34,7 +34,7 @@ interface ApiClient {
     fun getAllNotifications(@Path("username") username: String): Call<List<Notification>>
 
     companion object {
-        val BASE_URL = "http://10.7.242.131:8080/"
+        val BASE_URL = "http://192.168.180.43:8080/"
 
         fun create(): ApiClient{
             val retrofit = Retrofit.Builder()

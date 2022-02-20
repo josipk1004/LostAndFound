@@ -15,10 +15,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if(Data.loggedUser.id == null)
+        if(Data.loggedUser == null)
             goToLogin()
-
-        nameMain.setText(Data.loggedUser.firstName + "!")
+        nameMain.setText(Data.loggedUser?.firstName + "!")
 
         newNotifButton.setOnClickListener {
             val intent = Intent(this@MainActivity, NewNotification::class.java)
@@ -41,10 +40,18 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, Login::class.java))
     }
 
+    override fun onResume(){
+        super.onResume()
+        if(Data.loggedUser == null)
+            goToLogin()
+        nameMain.setText(Data.loggedUser?.firstName + "!")
+    }
+
+
     override fun onStart() {
         super.onStart()
 
-        if(Data.loggedUser.id == null)
+        if(Data.loggedUser?.id == null)
             startActivity(Intent(this@MainActivity, Login::class.java))
     }
 }
