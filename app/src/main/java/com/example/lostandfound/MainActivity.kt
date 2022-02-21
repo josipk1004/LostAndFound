@@ -8,7 +8,6 @@ import com.example.lostandfound.net.retrofit.apiClient.ApiClient
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    // data:
     val service = ApiClient.create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +33,12 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        logoutButton.setOnClickListener {
+            Data.loggedUser = null
+            val intent = Intent(this@MainActivity, Login::class.java)
+            startActivity(intent)
+        }
+
     }
 
     fun goToLogin(){
@@ -50,8 +55,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-
-        if(Data.loggedUser?.id == null)
+        if(Data.loggedUser == null)
             startActivity(Intent(this@MainActivity, Login::class.java))
     }
 }

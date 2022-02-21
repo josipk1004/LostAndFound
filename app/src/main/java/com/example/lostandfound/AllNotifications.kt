@@ -18,7 +18,13 @@ class AllNotifications : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all_notifications)
 
-        val call = Data.service.getAllNotifications(Data.loggedUser.username)
+        if(Data.loggedUser == null)
+            startActivity(Intent(this, Login::class.java))
+
+        if(Data.loggedUser?.id == null)
+            startActivity(Intent(this, Login::class.java))
+
+        val call = Data.service.getAllNotifications(Data.loggedUser!!.username)
         call.enqueue(object: Callback<List<Notification>> {
             override fun onResponse(
                 call: Call<List<Notification>>?,
@@ -62,5 +68,11 @@ class AllNotifications : AppCompatActivity() {
                 startActivity(intent)
             }
         })
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if(Data.loggedUser == null)
+            startActivity(Intent(this@AllNotifications, Login::class.java))
     }
 }
