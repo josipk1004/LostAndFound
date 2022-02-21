@@ -6,13 +6,13 @@ import com.google.gson.annotations.SerializedName
 class NotificationRequest(title: String?, subject: String?, description: String?,
                             address: String?, date: String?) {
     @SerializedName("title")
-    var title: String? = null
+    var title: String? = title
     @SerializedName("subject")
-    var subject: String? = null
+    var subject: String? = subject
     @SerializedName("description")
-    var description: String? = null
+    var description: String? = description
     @SerializedName("address")
-    var address: String? = null
+    var address: String? = address
     @SerializedName("date")
-    var date: String? = null
+    var date: String? = date
 }

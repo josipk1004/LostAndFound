@@ -69,13 +69,19 @@ class NewNotification : AppCompatActivity() {
         val address = findViewById<TextView>(R.id.addressNew).text.toString()
         val date = findViewById<TextView>(R.id.dateNew).text.toString()
 
+        val dateFormat: String? = ((date.get(0)).toString()).plus(date.get(1)).plus(date.get(2))
+            .plus(date.get(3)).plus("-").plus(date.get(4)).plus(date.get(5))
+            .plus("-").plus(date.get(6)).plus(date.get(7))
+
+
+
         if(title == null || subject == null || description == null
             || address == null || date == null){
             empty()
             return null
         }
 
-        return NotificationRequest(title, subject, description, address, date)
+        return NotificationRequest(title, subject, description, address, dateFormat )
     }
 
     fun empty(){
