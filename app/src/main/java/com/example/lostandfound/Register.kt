@@ -9,6 +9,9 @@ import android.widget.Toast
 import com.example.lostandfound.entity.Data
 import com.example.lostandfound.entity.User
 import com.example.lostandfound.net.retrofit.model.RegisterRequest
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Response
 
@@ -21,18 +24,19 @@ class Register : AppCompatActivity() {
         val button = findViewById<Button>(R.id.registerButtonRegister)
 
         button.setOnClickListener{
-            register()
+            GlobalScope.launch { register() }
         }
     }
 
-    fun register(){
+    suspend fun register(){
         val registerRequest = makeRegisterRequest()
 
         if(registerRequest == null){
             return
         }
 
-        val serviceCall = Data.service.registerUser(registerRequest)
+        val serviceCall = (GlobalScope.async {  Data.service.registerUser(registerRequest)})
+            .await()
 
         serviceCall.enqueue(object: retrofit2.Callback<User>{
             override fun onResponse(

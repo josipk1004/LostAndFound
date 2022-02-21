@@ -9,6 +9,9 @@ import android.widget.Toast
 import com.example.lostandfound.entity.Data
 import com.example.lostandfound.entity.NotificationEntity
 import com.example.lostandfound.net.retrofit.model.NotificationRequest
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,17 +24,41 @@ class NewNotification : AppCompatActivity() {
         val button = findViewById<Button>(R.id.notifButton)
 
         button.setOnClickListener({
-            pushNotification()
+            val notifReq = collectData()
+            GlobalScope.launch { pushNotification(notifReq) }
         })
     }
 
-    fun pushNotification(){
-        val notifReq = collectData()
+    fun collectData(): NotificationRequest?{
+        val title = findViewById<TextView>(R.id.titleNew).text.toString()
+        val subject = findViewById<TextView>(R.id.subjectNew).text.toString()
+        val description = findViewById<TextView>(R.id.descriptionNew).text.toString()
+        val address = findViewById<TextView>(R.id.addressNew).text.toString()
+        val date = findViewById<TextView>(R.id.dateNew).text.toString()
+
+        val dateFormat: String? = ((date.get(0)).toString()).plus(date.get(1)).plus(date.get(2))
+            .plus(date.get(3)).plus("-").plus(date.get(4)).plus(date.get(5))
+            .plus("-").plus(date.get(6)).plus(date.get(7))
+
+
+
+        if(title == null || subject == null || description == null
+            || address == null || date == null){
+            empty()
+            return null
+        }
+
+        return NotificationRequest(title, subject, description, address, dateFormat )
+    }
+
+    suspend fun pushNotification(notifReq: NotificationRequest?){
 
         if(notifReq == null)
             return
 
-        val call = Data.service.pushNotification(notifReq, Data.loggedUser!!.username)
+        val call = (GlobalScope.async {
+            Data.service.pushNotification(notifReq, Data.loggedUser!!.username)
+        }).await()
 
         call.enqueue(object: Callback<NotificationEntity>{
             override fun onResponse(
@@ -62,27 +89,6 @@ class NewNotification : AppCompatActivity() {
         })
     }
 
-    fun collectData(): NotificationRequest?{
-        val title = findViewById<TextView>(R.id.titleNew).text.toString()
-        val subject = findViewById<TextView>(R.id.subjectNew).text.toString()
-        val description = findViewById<TextView>(R.id.descriptionNew).text.toString()
-        val address = findViewById<TextView>(R.id.addressNew).text.toString()
-        val date = findViewById<TextView>(R.id.dateNew).text.toString()
-
-        val dateFormat: String? = ((date.get(0)).toString()).plus(date.get(1)).plus(date.get(2))
-            .plus(date.get(3)).plus("-").plus(date.get(4)).plus(date.get(5))
-            .plus("-").plus(date.get(6)).plus(date.get(7))
-
-
-
-        if(title == null || subject == null || description == null
-            || address == null || date == null){
-            empty()
-            return null
-        }
-
-        return NotificationRequest(title, subject, description, address, dateFormat )
-    }
 
     fun empty(){
         val text = "All fields must be filled!!"

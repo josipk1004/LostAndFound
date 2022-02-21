@@ -8,9 +8,12 @@ import com.example.lostandfound.entity.Data
 import com.example.lostandfound.entity.User
 import com.example.lostandfound.net.retrofit.model.LoginRequest
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.coroutines.*
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.Thread.sleep
 
 class Login : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,31 +41,8 @@ class Login : AppCompatActivity() {
             }
 
             val loginRequest = makeLoginRequest()
-            val serviceCall = Data.service.loginUser(loginRequest)
-            serviceCall.enqueue(object: Callback<User> {
-                    override fun onResponse(
-                        call: Call<User>?,
-                        response: Response<User>?
-                    ) {
-                        if(response?.isSuccessful == true){
-                            Data.setUser(response.body())
-                            startActivity(Intent(this@Login, MainActivity::class.java))
-                        }else{
-                            if(response?.code() == 404){
-                                val text = "Wrong username or password, please try again or register!"
-                                Toast.makeText(applicationContext, text, Toast.LENGTH_SHORT)
-                            }
-                            else {
-                                val text = "An error occurred, please try again!"
-                                Toast.makeText(applicationContext, text, Toast.LENGTH_LONG).show()
-                            }
-                        }
-                    }
 
-                    override fun onFailure(call: Call<User>?, t: Throwable?) {
-                        Toast.makeText(applicationContext, t?.message, Toast.LENGTH_LONG).show()
-                    }
-                })
+            GlobalScope.launch { loginUser(loginRequest) }
         }
     }
 
@@ -79,4 +59,34 @@ class Login : AppCompatActivity() {
         if(Data.loggedUser?.id != null)
             startActivity(Intent(this@Login, MainActivity::class.java))
     }
+
+    suspend fun loginUser(req: LoginRequest) {
+
+        val serviceCall = (GlobalScope.async { Data.service.loginUser(req) }).await()
+        serviceCall.enqueue(object: Callback<User> {
+            override fun onResponse(
+                call: Call<User>?,
+                response: Response<User>?
+            ) {
+                if(response?.isSuccessful == true){
+                    Data.setUser(response.body())
+                    startActivity(Intent(this@Login, MainActivity::class.java))
+                }else{
+                    if(response?.code() == 404){
+                        val text = "Wrong username or password, please try again or register!"
+                        Toast.makeText(applicationContext, text, Toast.LENGTH_SHORT)
+                    }
+                    else {
+                        val text = "An error occurred, please try again!"
+                        Toast.makeText(applicationContext, text, Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<User>?, t: Throwable?) {
+                Toast.makeText(applicationContext, t?.message, Toast.LENGTH_LONG).show()
+            }
+        })
+    }
+
 }
