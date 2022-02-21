@@ -7,8 +7,8 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.example.lostandfound.entity.Data
+import com.example.lostandfound.entity.NotificationEntity
 import com.example.lostandfound.net.retrofit.model.NotificationRequest
-import com.example.lostandfound.net.retrofit.model.NotificationResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,10 +33,10 @@ class NewNotification : AppCompatActivity() {
 
         val call = Data.service.pushNotification(notifReq, Data.loggedUser!!.username)
 
-        call.enqueue(object: Callback<NotificationResponse>{
+        call.enqueue(object: Callback<NotificationEntity>{
             override fun onResponse(
-                call: Call<NotificationResponse>,
-                response: Response<NotificationResponse>
+                call: Call<NotificationEntity>,
+                response: Response<NotificationEntity>
             ) {
                 if(response.code() == 200){
                     goToMain()
@@ -50,7 +50,7 @@ class NewNotification : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<NotificationResponse>?, t: Throwable?) {
+            override fun onFailure(call: Call<NotificationEntity>?, t: Throwable?) {
                 val text = "Something went wrong"
                 val length = Toast.LENGTH_SHORT
 

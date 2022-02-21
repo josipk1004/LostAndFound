@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lostandfound.entity.Data
-import com.example.lostandfound.entity.Notification
+import com.example.lostandfound.entity.NotificationEntity
 import com.example.lostandfound.entity.ShortNotification
 import kotlinx.android.synthetic.main.activity_user_notifications.*
 import retrofit2.Call
@@ -25,15 +25,16 @@ class AllNotifications : AppCompatActivity() {
             startActivity(Intent(this, Login::class.java))
 
         val call = Data.service.getAllNotifications(Data.loggedUser!!.username)
-        call.enqueue(object: Callback<List<Notification>> {
+        call.enqueue(object: Callback<List<NotificationEntity>> {
             override fun onResponse(
-                call: Call<List<Notification>>?,
-                response: Response<List<Notification>>
+                call: Call<List<NotificationEntity>>?,
+                response: Response<List<NotificationEntity>>
             ) {
                 if(response.code() == 200){
                     val shortNotifications = mutableListOf<ShortNotification>()
                     response.body().forEach{
-                        shortNotifications.add(it as ShortNotification)
+                        val shortNotif = ShortNotification(it)
+                        shortNotifications.add(shortNotif)
                     }
                     showData(shortNotifications)
                 } else {
@@ -45,7 +46,7 @@ class AllNotifications : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<List<Notification>>?, t: Throwable?) {
+            override fun onFailure(call: Call<List<NotificationEntity>>?, t: Throwable?) {
                 Toast.makeText(applicationContext, t?.message, Toast.LENGTH_LONG).show()
             }
 

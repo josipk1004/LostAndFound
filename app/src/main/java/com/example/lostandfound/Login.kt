@@ -7,7 +7,6 @@ import android.widget.Toast
 import com.example.lostandfound.entity.Data
 import com.example.lostandfound.entity.User
 import com.example.lostandfound.net.retrofit.model.LoginRequest
-import com.example.lostandfound.net.retrofit.model.LoginResponse
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,17 +39,13 @@ class Login : AppCompatActivity() {
 
             val loginRequest = makeLoginRequest()
             val serviceCall = Data.service.loginUser(loginRequest)
-            serviceCall.enqueue(object: Callback<LoginResponse> {
+            serviceCall.enqueue(object: Callback<User> {
                     override fun onResponse(
-                        call: Call<LoginResponse>?,
-                        response: Response<LoginResponse>?
+                        call: Call<User>?,
+                        response: Response<User>?
                     ) {
                         if(response?.isSuccessful == true){
-                            val loginResponse: LoginResponse = response.body()
-                            val user: User = User(loginResponse.id, loginResponse.firstName,
-                                loginResponse.lastName, loginResponse.email, loginResponse.username,
-                                loginResponse.password, loginResponse.notifications)
-                            Data.setUser(user)
+                            Data.setUser(response.body())
                             startActivity(Intent(this@Login, MainActivity::class.java))
                         }else{
                             if(response?.code() == 404){
@@ -64,7 +59,7 @@ class Login : AppCompatActivity() {
                         }
                     }
 
-                    override fun onFailure(call: Call<LoginResponse>?, t: Throwable?) {
+                    override fun onFailure(call: Call<User>?, t: Throwable?) {
                         Toast.makeText(applicationContext, t?.message, Toast.LENGTH_LONG).show()
                     }
                 })

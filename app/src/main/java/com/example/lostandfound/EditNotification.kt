@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.lostandfound.entity.Data
+import com.example.lostandfound.entity.NotificationEntity
 import com.example.lostandfound.net.retrofit.model.NotificationRequest
-import com.example.lostandfound.net.retrofit.model.NotificationResponse
 import kotlinx.android.synthetic.main.activity_edit_notification.*
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
@@ -60,10 +60,10 @@ class EditNotification : AppCompatActivity() {
 
             val notificationRequest = makeNotificationRequest()
             val serviceCall = Data.service.updateNotification(id, notificationRequest)
-            serviceCall.enqueue(object: Callback<NotificationResponse> {
+            serviceCall.enqueue(object: Callback<NotificationEntity> {
                 override fun onResponse(
-                    call: Call<NotificationResponse>?,
-                    response: Response<NotificationResponse>
+                    call: Call<NotificationEntity>?,
+                    response: Response<NotificationEntity>
                 ) {
                     if(response.code() == 200){
                         Toast.makeText(applicationContext, "Updated successfully!", Toast.LENGTH_SHORT).show()
@@ -75,7 +75,7 @@ class EditNotification : AppCompatActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<NotificationResponse>?, t: Throwable?) {
+                override fun onFailure(call: Call<NotificationEntity>?, t: Throwable?) {
                     Toast.makeText(applicationContext, t?.message, Toast.LENGTH_SHORT).show()
                     return
                 }

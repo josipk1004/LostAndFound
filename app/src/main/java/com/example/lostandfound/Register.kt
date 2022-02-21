@@ -7,9 +7,8 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.example.lostandfound.entity.Data
-import com.example.lostandfound.net.retrofit.apiClient.ApiClient
+import com.example.lostandfound.entity.User
 import com.example.lostandfound.net.retrofit.model.RegisterRequest
-import com.example.lostandfound.net.retrofit.model.RegisterResponse
 import retrofit2.Call
 import retrofit2.Response
 
@@ -35,10 +34,10 @@ class Register : AppCompatActivity() {
 
         val serviceCall = Data.service.registerUser(registerRequest)
 
-        serviceCall.enqueue(object: retrofit2.Callback<RegisterResponse>{
+        serviceCall.enqueue(object: retrofit2.Callback<User>{
             override fun onResponse(
-                call: Call<RegisterResponse>,
-                response: Response<RegisterResponse>
+                call: Call<User>,
+                response: Response<User>
             ) {
                 if(response.code() == 200){
                     goToLogin()
@@ -52,7 +51,7 @@ class Register : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<RegisterResponse>?, t: Throwable?) {
+            override fun onFailure(call: Call<User>?, t: Throwable?) {
                 val text = "Something went wrong!!!"
                 val duration = Toast.LENGTH_SHORT
 

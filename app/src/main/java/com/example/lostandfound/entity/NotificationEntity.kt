@@ -1,11 +1,9 @@
 package com.example.lostandfound.entity
 
-import com.example.lostandfound.net.retrofit.model.RegisterResponse
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
 import java.util.*
 
-class Notification {
+class NotificationEntity {
     @SerializedName("id")
     var id: Long? = null
 
@@ -25,6 +23,6 @@ class Notification {
     var date: String? = null
 
     @SerializedName("user")
-    var user: RegisterResponse? = null
+    var user: User? = null
 }
   

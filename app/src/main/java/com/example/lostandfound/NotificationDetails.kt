@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.lostandfound.entity.Data
-import com.example.lostandfound.net.retrofit.model.NotificationResponse
+import com.example.lostandfound.entity.NotificationEntity
 import kotlinx.android.synthetic.main.activity_notification_details.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,14 +17,14 @@ class NotificationDetails : AppCompatActivity() {
         setContentView(R.layout.activity_notification_details)
 
         val id = intent.getSerializableExtra("id") as Long
-        var notification: NotificationResponse? = null
+        var notification: NotificationEntity? = null
 
         val callNotif = Data.service.getNotification(id)
 
-        callNotif.enqueue(object: Callback<NotificationResponse> {
+        callNotif.enqueue(object: Callback<NotificationEntity> {
             override fun onResponse(
-                call: Call<NotificationResponse>?,
-                response: Response<NotificationResponse>
+                call: Call<NotificationEntity>?,
+                response: Response<NotificationEntity>
             ) {
                 if (response.code() == 200) {
                     notification = response.body()
@@ -36,7 +36,7 @@ class NotificationDetails : AppCompatActivity() {
                     return
                 }
             }
-            override fun onFailure(call: Call<NotificationResponse>?, t: Throwable?) {
+            override fun onFailure(call: Call<NotificationEntity>?, t: Throwable?) {
                 Toast.makeText(applicationContext, t?.message, Toast.LENGTH_LONG).show()                    }
         })
 

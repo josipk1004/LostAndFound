@@ -1,13 +1,27 @@
 package com.example.lostandfound.entity
 
-import java.io.Serializable
+import com.google.gson.annotations.SerializedName
 
-data class User(
-    var id: Long? = null,
-    val firstName: String = "",
-    val lastName: String = "",
-    val email: String = "",
-    val username: String = "",
-    val password: String = "",
-    val notifications: List<Notification>? = null
-    ) : Serializable
+class User {
+    @SerializedName("id")
+    val id: Long? = null
+
+    @SerializedName("firstName")
+    val firstName: String = ""
+
+    @SerializedName("lastName")
+    val lastName: String = ""
+
+    @SerializedName("email")
+    val email: String = ""
+
+    @SerializedName("username")
+    val username: String = ""
+
+    @SerializedName("password")
+    val password: String = ""
+
+    @SerializedName("notifications")
+    val notifications: List<NotificationEntity>? = null
+}
+

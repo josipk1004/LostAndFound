@@ -1,6 +1,7 @@
 package com.example.lostandfound.net.retrofit.apiClient
 
-import com.example.lostandfound.entity.Notification
+import com.example.lostandfound.entity.NotificationEntity
+import com.example.lostandfound.entity.User
 import com.example.lostandfound.net.retrofit.model.*
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -10,30 +11,30 @@ import retrofit2.http.*
 interface ApiClient {
 
     @POST("/registerUser")
-    fun registerUser(@Body reg: RegisterRequest): Call<RegisterResponse>
+    fun registerUser(@Body reg: RegisterRequest): Call<User>
 
     @POST("/loginUser")
-    fun loginUser(@Body log: LoginRequest): Call<LoginResponse>
+    fun loginUser(@Body log: LoginRequest): Call<User>
 
     @POST("{username}/putNotification")
     fun pushNotification(@Body notif: NotificationRequest, @Path("username") username: String)
-    : Call<NotificationResponse>
+    : Call<NotificationEntity>
 
     @GET("/{username}/notifications")
-    fun getUserNotifications(@Path("username") username: String): Call<List<Notification>>
+    fun getUserNotifications(@Path("username") username: String): Call<List<NotificationEntity>>
 
     @GET("/notifications/{id}")
-    fun getNotification(@Path("id") id: Long): Call<NotificationResponse>
+    fun getNotification(@Path("id") id: Long): Call<NotificationEntity>
 
     @GET("/{username}/allNotifs")
-    fun getAllNotifications(@Path("username") username: String): Call<List<Notification>>
+    fun getAllNotifications(@Path("username") username: String): Call<List<NotificationEntity>>
 
     @POST("/{id}/deleteNotif")
     fun deleteNotification(@Path("id") id: Long): Call<DeleteNotifResponse>
 
     @POST("/{id}/updateNotif")
     fun updateNotification( @Path("id") id: Long, @Body notif: NotificationRequest)
-    : Call<NotificationResponse>
+    : Call<NotificationEntity>
 
     companion object {
         val BASE_URL = "http://192.168.180.43:8080/"

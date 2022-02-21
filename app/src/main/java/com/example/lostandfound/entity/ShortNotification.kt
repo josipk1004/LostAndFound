@@ -7,7 +7,7 @@ data class ShortNotification(
     var title: String = "",
     var subject: String = ""
 ) : Serializable {
-    constructor(c: Notification) : this(
+    constructor(c: NotificationEntity) : this(
         c.id,
         c.title!!,
         c.subject!!
