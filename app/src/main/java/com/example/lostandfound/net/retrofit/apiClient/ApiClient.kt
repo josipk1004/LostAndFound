@@ -1,12 +1,7 @@
 package com.example.lostandfound.net.retrofit.apiClient
 
 import com.example.lostandfound.entity.Notification
-import com.example.lostandfound.net.retrofit.model.LoginRequest
-import com.example.lostandfound.net.retrofit.model.LoginResponse
-import com.example.lostandfound.net.retrofit.model.NotificationRequest
-import com.example.lostandfound.net.retrofit.model.NotificationResponse
-import com.example.lostandfound.net.retrofit.model.RegisterRequest
-import com.example.lostandfound.net.retrofit.model.RegisterResponse
+import com.example.lostandfound.net.retrofit.model.*
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -32,6 +27,13 @@ interface ApiClient {
 
     @GET("/{username}/allNotifs")
     fun getAllNotifications(@Path("username") username: String): Call<List<Notification>>
+
+    @POST("/{id}/deleteNotif")
+    fun deleteNotification(@Path("id") id: Long): Call<DeleteNotifResponse>
+
+    @POST("/{id}/updateNotif")
+    fun updateNotification( @Path("id") id: Long, @Body notif: NotificationRequest)
+    : Call<NotificationResponse>
 
     companion object {
         val BASE_URL = "http://192.168.180.43:8080/"

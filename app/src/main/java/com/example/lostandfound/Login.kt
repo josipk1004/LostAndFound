@@ -6,10 +6,8 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.lostandfound.entity.Data
 import com.example.lostandfound.entity.User
-import com.example.lostandfound.net.retrofit.apiClient.ApiClient
 import com.example.lostandfound.net.retrofit.model.LoginRequest
 import com.example.lostandfound.net.retrofit.model.LoginResponse
-import com.example.lostandfound.net.retrofit.model.RegisterResponse
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,6 +17,8 @@ class Login : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        if(Data.loggedUser?.id != null)
+            startActivity(Intent(this@Login, MainActivity::class.java))
 
         registerButtonLogin.setOnClickListener {
             startActivity(Intent(this, Register::class.java))
@@ -81,7 +81,7 @@ class Login : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        if(Data.loggedUser.id != null)
+        if(Data.loggedUser?.id != null)
             startActivity(Intent(this@Login, MainActivity::class.java))
     }
 }

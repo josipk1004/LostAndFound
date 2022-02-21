@@ -13,6 +13,9 @@
         android:theme="@style/Theme.LostAndFound"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".EditNotification"
+            android:exported="false" />
+        <activity
             android:name=".UserNotificationDetails"
             android:exported="false" />
         <activity

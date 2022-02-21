@@ -24,7 +24,7 @@
     <string name="address">Address:</string>
     <string name="enter_address">Enter address</string>
     <string name="hello">Hello,</string>
-    <string name="my_notificatons">My notificatons</string>
-    <string name="all">All</string>
+    <string name="my_notificatons">My notifications</string>
+    <string name="all">All notifications</string>
     <string name="notifications_from_other_users">Notifications from other users</string>
 </resources>

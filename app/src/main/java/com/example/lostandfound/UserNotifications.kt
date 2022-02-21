@@ -20,7 +20,13 @@ class UserNotifications : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_notifications)
 
-        val call = Data.service.getUserNotifications(Data.loggedUser.username)
+        if(Data.loggedUser == null)
+            startActivity(Intent(this, Login::class.java))
+
+        if(Data.loggedUser?.id == null)
+            startActivity(Intent(this, Login::class.java))
+
+        val call = Data.service.getUserNotifications(Data.loggedUser!!.username)
         call.enqueue(object: Callback<List<Notification>>{
             override fun onResponse(
                 call: Call<List<Notification>>?,
@@ -68,8 +74,10 @@ class UserNotifications : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        if(Data.loggedUser == null)
+            startActivity(Intent(this, Login::class.java))
 
-        if(Data.loggedUser.id == null)
+        if(Data.loggedUser?.id == null)
             startActivity(Intent(this, Login::class.java))
     }
 }

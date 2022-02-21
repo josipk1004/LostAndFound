@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#7BCAD5"
-    tools:context=".MainActivity" >
+    android:background="#2CB2C3"
+    tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/textView4"
@@ -40,22 +40,20 @@
         android:layout_marginTop="76dp"
         android:clickable="true"
         android:contentDescription="@string/new_notification"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameMain"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@android:drawable/ic_input_add"
-        tools:ignore="SpeakableTextPresentCheck"
-        android:focusable="true" />
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/myNotificationsbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@android:color/white"
-        android:backgroundTint="@color/black"
         android:text="@string/my_notificatons"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toTopOf="@+id/allNotifications"
@@ -69,11 +67,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@android:color/white"
         android:contentDescription="@string/notifications_from_other_users"
         android:text="@string/all"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myNotificationsbutton" />
+
+    <ImageView
+        android:id="@+id/logoutButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_lock_power_off" />
 </androidx.constraintlayout.widget.ConstraintLayout>
