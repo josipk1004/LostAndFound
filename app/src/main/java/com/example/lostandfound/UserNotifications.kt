@@ -1,30 +1,72 @@
 package com.example.lostandfound
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.AttributeSet
+import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.lostandfound.entity.Data
 import com.example.lostandfound.entity.NotificationEntity
 import com.example.lostandfound.entity.ShortNotification
+import com.example.lostandfound.recycleView.RecyclerAdapter
 import kotlinx.android.synthetic.main.activity_user_notifications.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class UserNotifications : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user_notifications)
 
+
+    private var layoutManager: RecyclerView.LayoutManager? = null
+    private var adapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            setContentView(R.layout.activity_user_notifications)
+
+            layoutManager = LinearLayoutManager(applicationContext)
+            userNotificationsRecyclerView.layoutManager = layoutManager
+
+            adapter = RecyclerAdapter()
+            userNotificationsRecyclerView.adapter = adapter
+
+
+            if (Data.loggedUser == null)
+                startActivity(Intent(this, Login::class.java))
+
+            if (Data.loggedUser?.id == null)
+                startActivity(Intent(this, Login::class.java))
+
+            GlobalScope.launch { collectData() }
+
+    }
+
+
+
+    override fun onStart() {
+        super.onStart()
         if(Data.loggedUser == null)
             startActivity(Intent(this, Login::class.java))
+    }
 
-        if(Data.loggedUser?.id == null)
-            startActivity(Intent(this, Login::class.java))
+    override fun onResume(){
+        super.onResume()
+        GlobalScope.launch { collectData() }
+    }
 
-        val call = Data.service.getUserNotifications(Data.loggedUser!!.username)
+    suspend fun collectData(){
+        val call = (GlobalScope.async {
+            Data.service.getUserNotifications(Data.loggedUser!!.username)
+        }).await()
         call.enqueue(object: Callback<List<NotificationEntity>>{
             override fun onResponse(
                 call: Call<List<NotificationEntity>>?,
@@ -51,32 +93,25 @@ class UserNotifications : AppCompatActivity() {
             }
 
         })
+
     }
 
-    private fun showData(notifications: List<ShortNotification>) {
-        /*userNotificationsRecyclerView.apply {
-            layoutManager = LinearLayoutManager(this@UserNotifications)
-            adapter = NotificationsAdapter(notifications)
-        }*/
-        userNotificationsRecyclerView.layoutManager = LinearLayoutManager(this@UserNotifications)
-        var adapter = NotificationsAdapter(notifications)
-        userNotificationsRecyclerView.adapter = adapter
+    fun showData(notifications: List<ShortNotification>?){
+        layoutManager = LinearLayoutManager(applicationContext)
+        userNotificationsRecyclerView.layoutManager = layoutManager
 
-        adapter.setOnItemClickListener(object: NotificationsAdapter.OnItemClickListener{
+        val adapter = RecyclerAdapter()
+        adapter.setNotifs(notifications)
+
+        adapter.setOnItemClickListener(object: RecyclerAdapter.OnItemClickListener{
             override fun onItemClick(position: Int) {
                 val intent = Intent(this@UserNotifications, UserNotificationDetails::class.java)
-                    .putExtra("id", notifications[position].id!!)
+                    .putExtra("id", notifications!!.get(position).id!!)
                 startActivity(intent)
             }
         })
-    }
+        userNotificationsRecyclerView.adapter = adapter
 
-    override fun onStart() {
-        super.onStart()
-        if(Data.loggedUser == null)
-            startActivity(Intent(this, Login::class.java))
 
-        if(Data.loggedUser?.id == null)
-            startActivity(Intent(this, Login::class.java))
     }
 }

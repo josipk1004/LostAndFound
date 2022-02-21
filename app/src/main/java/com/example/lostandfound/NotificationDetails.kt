@@ -28,10 +28,16 @@ class NotificationDetails : AppCompatActivity() {
             ) {
                 if (response.code() == 200) {
                     notification = response.body()
+                    titleNotificationDetail.text = notification?.title
+                    ownerNotificationDetail.text = notification?.user?.username
+                    subjectNotificationDetail.text = notification?.subject
+                    dateNotificationDetail.setText(notification?.date.toString())
+                    addressNotificationDetail.text = notification?.address
+                    descrNotificationDetail.setText(notification?.description)
                 } else {
                     val text = "Something went wrong"
                     val length = Toast.LENGTH_SHORT
-                    val toast = Toast.makeText(applicationContext, text, length)
+                    val toast = Toast.makeText(applicationContext, response.code(), length)
                     toast.show()
                     return
                 }
@@ -39,13 +45,6 @@ class NotificationDetails : AppCompatActivity() {
             override fun onFailure(call: Call<NotificationEntity>?, t: Throwable?) {
                 Toast.makeText(applicationContext, t?.message, Toast.LENGTH_LONG).show()                    }
         })
-
-        titleNotificationDetail.text = notification?.title
-        ownerNotificationDetail.text = notification?.user?.username
-        subjectNotificationDetail.text = notification?.subject
-        dateNotificationDetail.setText(notification?.date.toString())
-        addressNotificationDetail.text = notification?.address
-        descrNotificationDetail.setText(notification?.description)
 
         backToAllNotifications.setOnClickListener {
             startActivity(Intent(this, AllNotifications::class.java))

@@ -31,6 +31,12 @@ class UserNotificationDetails : AppCompatActivity() {
             ) {
                 if (response.code() == 200) {
                     notification = response.body()
+                    titleUserNotificationDetail.text = notification?.title
+                    subjectUserNotificificationDetail.text = notification?.subject
+                    dateUserNotificatonDetail.setText(notification?.date.toString())
+                    addressUserNotificationDetail.text = notification?.address
+                    descrUserNotificationDetail.setText(notification?.description)
+
                 } else {
                     val text = "Something went wrong"
                     val length = Toast.LENGTH_SHORT
@@ -44,12 +50,6 @@ class UserNotificationDetails : AppCompatActivity() {
                 Toast.makeText(applicationContext, t?.message, Toast.LENGTH_LONG).show()
             }
         })
-
-        titleUserNotificationDetail.text = notification?.title
-        subjectUserNotificificationDetail.text = notification?.subject
-        dateUserNotificatonDetail.setText(notification?.date.toString())
-        addressUserNotificationDetail.text = notification?.address
-        descrUserNotificationDetail.setText(notification?.description)
 
         backToUserNotifications.setOnClickListener {
             startActivity(Intent(this, UserNotifications::class.java))
