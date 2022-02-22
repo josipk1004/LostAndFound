@@ -37,7 +37,8 @@ interface ApiClient {
     : Call<NotificationEntity>
 
     companion object {
-        val BASE_URL = "http://192.168.180.43:8080/"
+//        val BASE_URL = "http://192.168.180.43:8080/"
+        val BASE_URL = "http://192.168.1.10:8080/"
 
         fun create(): ApiClient{
             val retrofit = Retrofit.Builder()

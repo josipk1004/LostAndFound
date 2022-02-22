@@ -20,7 +20,20 @@ class EditNotification : AppCompatActivity() {
         if(Data.loggedUser == null)
             startActivity(Intent(this, Login::class.java))
 
-        val id = intent.getSerializableExtra("id") as Long
+        val extras = intent.getExtras()
+        val id = extras?.getSerializable("id") as Long
+        val title = extras?.getString("title")
+        val subject = extras?.getString("subject")
+        val date = extras?.getString("date")
+        val address = extras?.getString("address")
+        val description = extras?.getString("description")
+//        val id = intent.getSerializableExtra("id") as Long
+
+        titleEditNotification.setText(title)
+        subjectEditNotification.setText(subject)
+        dateEditNotification.setText(date.toString())
+        addressEditNotification.setText(address)
+        descrEditNotification.setText(description)
 
         saveEditNotificationButton.setOnClickListener {
             val title = titleEditNotification.text.toString().trim()

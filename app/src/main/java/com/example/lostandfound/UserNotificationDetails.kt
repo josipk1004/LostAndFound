@@ -56,7 +56,14 @@ class UserNotificationDetails : AppCompatActivity() {
         }
 
         editUserNotificationDetail.setOnClickListener {
-            startActivity(Intent(this, EditNotification::class.java).putExtra("id", id))
+            startActivity(
+                Intent(this, EditNotification::class.java).putExtra("id", id)
+                    .putExtra("title", notification?.title)
+                    .putExtra("subject", notification?.subject)
+                    .putExtra("date", notification?.date)
+                    .putExtra("address", notification?.address)
+                    .putExtra("description", notification?.description)
+            )
         }
 
         deleteUserNotificationDetail.setOnClickListener {
