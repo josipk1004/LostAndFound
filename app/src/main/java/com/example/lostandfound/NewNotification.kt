@@ -28,6 +28,15 @@ class NewNotification : AppCompatActivity() {
             val notifReq = collectData()
             GlobalScope.launch { pushNotification(notifReq) }
         })
+
+        val date = findViewById<TextView>(R.id.dateNew)
+
+        val calendar = Calendar.getInstance()
+        date.setText(
+            calendar.get(Calendar.YEAR).toString().padStart(4, '0')
+                    + (calendar.get(Calendar.MONTH) + 1).toString().padStart(2, '0')
+                    + calendar.get(Calendar.DAY_OF_MONTH).toString().padStart(2, '0')
+        )
     }
 
     fun collectData(): NotificationRequest?{
