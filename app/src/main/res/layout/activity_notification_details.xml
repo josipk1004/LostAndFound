@@ -132,21 +132,26 @@
                 android:minHeight="48dp"
                 android:textSize="20sp"
                 /></TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/backToAllNotifications"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:backgroundTint="#2196F3"
+            app:srcCompat="?attr/actionModeCloseDrawable"
+            tools:ignore="SpeakableTextPresentCheck" />
+        <Button
+            android:id="@+id/pushButton"
+            android:layout_height="60dp"
+            android:layout_width="60dp"
+            android:layout_weight="1"
+            android:text="FOUND OBJECT"></Button></TableRow>
+
 
     </TableLayout>
 
-    <ImageButton
-        android:id="@+id/backToAllNotifications"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="242dp"
-        android:layout_marginBottom="124dp"
-        android:backgroundTint="#2196F3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.458"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="?attr/actionModeCloseDrawable"
-        tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

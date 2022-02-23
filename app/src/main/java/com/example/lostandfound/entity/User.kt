@@ -23,5 +23,9 @@ class User {
 
     @SerializedName("notifications")
     val notifications: List<NotificationEntity>? = null
+
+    @SerializedName("token")
+    var token: String? = null
+
 }
 

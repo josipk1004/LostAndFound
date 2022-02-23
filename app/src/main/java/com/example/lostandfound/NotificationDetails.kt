@@ -26,6 +26,10 @@ class NotificationDetails : AppCompatActivity() {
         backToAllNotifications.setOnClickListener {
             finish()
         }
+
+        pushButton.setOnClickListener({
+            startActivity(Intent(this, setPUSH::class.java).putExtra("id", id))
+        })
     }
 
     override fun onStart() {
@@ -69,4 +73,5 @@ class NotificationDetails : AppCompatActivity() {
         })
 
     }
+
 }

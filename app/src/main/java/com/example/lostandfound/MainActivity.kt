@@ -3,9 +3,15 @@ package com.example.lostandfound
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import com.example.lostandfound.entity.Data
 import com.example.lostandfound.net.retrofit.apiClient.ApiClient
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     val service = ApiClient.create()
@@ -17,6 +23,24 @@ class MainActivity : AppCompatActivity() {
         if(Data.loggedUser == null)
             goToLogin()
         nameMain.setText(Data.loggedUser?.firstName + "!")
+
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w("failed", "getInstanceId failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                // Get new Instance ID token
+                val token = task.result?.token !!
+                Data.loggedUser?.token = token
+
+                GlobalScope.launch { Data.service.setToken(token, Data.loggedUser?.username) }
+
+                // Log and toast
+                Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
+                Log.e("token", token)
+            })
 
         newNotifButton.setOnClickListener {
             val intent = Intent(this@MainActivity, NewNotification::class.java)
@@ -57,5 +81,9 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         if(Data.loggedUser == null)
             startActivity(Intent(this@MainActivity, Login::class.java))
+    }
+
+    companion object {
+        val ACTION_RESPONSE = "messageReceived"
     }
 }
