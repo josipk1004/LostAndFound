@@ -10,6 +10,9 @@ import com.example.lostandfound.entity.Data
 import com.example.lostandfound.entity.NotificationEntity
 import com.example.lostandfound.net.retrofit.model.DeleteNotifResponse
 import kotlinx.android.synthetic.main.activity_user_notification_details.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,39 +23,12 @@ class UserNotificationDetails : AppCompatActivity() {
         setContentView(R.layout.activity_user_notification_details)
 
         val id = intent.getSerializableExtra("id") as Long
-        var notification: NotificationEntity? = null
 
-        val callNotif = Data.service.getNotification(id)
+        GlobalScope.launch { getNotification(id) }
 
-        callNotif.enqueue(object : Callback<NotificationEntity> {
-            override fun onResponse(
-                call: Call<NotificationEntity>?,
-                response: Response<NotificationEntity>
-            ) {
-                if (response.code() == 200) {
-                    notification = response.body()
-                    titleUserNotificationDetail.text = notification?.title
-                    subjectUserNotificificationDetail.text = notification?.subject
-                    dateUserNotificatonDetail.setText(notification?.date.toString())
-                    addressUserNotificationDetail.text = notification?.address
-                    descrUserNotificationDetail.setText(notification?.description)
-
-                } else {
-                    val text = "Something went wrong"
-                    val length = Toast.LENGTH_SHORT
-                    val toast = Toast.makeText(applicationContext, text, length)
-                    toast.show()
-                    return
-                }
-            }
-
-            override fun onFailure(call: Call<com.example.lostandfound.entity.NotificationEntity>?, t: Throwable?) {
-                Toast.makeText(applicationContext, t?.message, Toast.LENGTH_LONG).show()
-            }
-        })
 
         backToUserNotifications.setOnClickListener {
-            startActivity(Intent(this, UserNotifications::class.java))
+            finish()
         }
 
         editUserNotificationDetail.setOnClickListener {
@@ -84,7 +60,7 @@ class UserNotificationDetails : AppCompatActivity() {
                     }else{
                         Toast.makeText(applicationContext, "Deleting is not possible!", Toast.LENGTH_SHORT).show()
                     }
-                    startActivity(Intent(this@UserNotificationDetails, UserNotifications::class.java))
+                    finish()
                 }
 
                 override fun onFailure(call: Call<DeleteNotifResponse>?, t: Throwable?) {
@@ -108,4 +84,38 @@ class UserNotificationDetails : AppCompatActivity() {
         if(Data.loggedUser?.id == null)
             startActivity(Intent(this, Login::class.java))
     }
+
+    suspend fun getNotification(id: Long){
+        var notification: NotificationEntity? = null
+
+        val callNotif = (GlobalScope.async{
+            Data.service.getNotification(id)}).await()
+
+            callNotif.enqueue(object : Callback<NotificationEntity> {
+                override fun onResponse(
+                    call: Call<NotificationEntity>?,
+                    response: Response<NotificationEntity>
+                ) {
+                    if (response.code() == 200) {
+                        notification = response.body()
+                        titleUserNotificationDetail.text = notification?.title
+                        subjectUserNotificificationDetail.text = notification?.subject
+                        dateUserNotificatonDetail.setText(notification?.date.toString())
+                        addressUserNotificationDetail.text = notification?.address
+                        descrUserNotificationDetail.setText(notification?.description)
+
+                    } else {
+                        val text = "Something went wrong"
+                        val length = Toast.LENGTH_SHORT
+                        val toast = Toast.makeText(applicationContext, text, length)
+                        toast.show()
+                        return
+                    }
+                }
+
+                override fun onFailure(call: Call<com.example.lostandfound.entity.NotificationEntity>?, t: Throwable?) {
+                    Toast.makeText(applicationContext, t?.message, Toast.LENGTH_LONG).show()
+                }
+            })
+        }
 }

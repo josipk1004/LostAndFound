@@ -45,6 +45,13 @@ class Register : AppCompatActivity() {
             ) {
                 if(response.code() == 200){
                     goToLogin()
+                } else if (response.code() == 403){
+                    val text = "Username already exists!!!"
+                    val duration = Toast.LENGTH_SHORT
+
+                    val toast = Toast.makeText(applicationContext, text, duration)
+                    toast.show()
+                    return
                 } else {
                     val text = "Something went wrong!!!"
                     val duration = Toast.LENGTH_SHORT
@@ -78,6 +85,13 @@ class Register : AppCompatActivity() {
             || username == null || password == null){
             fieldEmpty()
             return null
+        }; if(password.length <= 8){
+            val text = "Password length must be at least 8!"
+            val duration = Toast.LENGTH_SHORT
+
+            val toast = Toast.makeText(applicationContext, text, duration)
+            toast.show()
+            return null
         }
 
         return RegisterRequest(firstName, lastName, email, username, password)
@@ -94,5 +108,6 @@ class Register : AppCompatActivity() {
 
         val toast = Toast.makeText(applicationContext, text, duration)
         toast.show()
+        return
     }
 }

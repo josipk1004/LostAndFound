@@ -24,5 +24,8 @@ class NotificationEntity {
 
     @SerializedName("user")
     var user: User? = null
+
+    @SerializedName("username")
+    var username: String? = null
 }
   

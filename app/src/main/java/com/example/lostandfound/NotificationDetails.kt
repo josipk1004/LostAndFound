@@ -7,6 +7,9 @@ import android.widget.Toast
 import com.example.lostandfound.entity.Data
 import com.example.lostandfound.entity.NotificationEntity
 import kotlinx.android.synthetic.main.activity_notification_details.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,9 +20,28 @@ class NotificationDetails : AppCompatActivity() {
         setContentView(R.layout.activity_notification_details)
 
         val id = intent.getSerializableExtra("id") as Long
+
+        GlobalScope.launch { setNotification(id) }
+
+        backToAllNotifications.setOnClickListener {
+            finish()
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if(Data.loggedUser == null)
+            startActivity(Intent(this, Login::class.java))
+
+        if(Data.loggedUser?.id == null)
+            startActivity(Intent(this, Login::class.java))
+    }
+
+    suspend fun setNotification(id: Long){
         var notification: NotificationEntity? = null
 
-        val callNotif = Data.service.getNotification(id)
+        val callNotif = (GlobalScope.async {Data.service.getNotification(id)  }).await()
 
         callNotif.enqueue(object: Callback<NotificationEntity> {
             override fun onResponse(
@@ -29,10 +51,10 @@ class NotificationDetails : AppCompatActivity() {
                 if (response.code() == 200) {
                     notification = response.body()
                     titleNotificationDetail.text = notification?.title
-                    ownerNotificationDetail.text = notification?.user?.username
-                    subjectNotificationDetail.text = notification?.subject
+                    ownerNotificationDetail.setText(notification?.username)
+                    subjectNotificationDetail.setText(notification?.subject)
                     dateNotificationDetail.setText(notification?.date.toString())
-                    addressNotificationDetail.text = notification?.address
+                    addressNotificationDetail.setText(notification?.address)
                     descrNotificationDetail.setText(notification?.description)
                 } else {
                     val text = "Something went wrong"
@@ -46,18 +68,5 @@ class NotificationDetails : AppCompatActivity() {
                 Toast.makeText(applicationContext, t?.message, Toast.LENGTH_LONG).show()                    }
         })
 
-        backToAllNotifications.setOnClickListener {
-            startActivity(Intent(this, AllNotifications::class.java))
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        if(Data.loggedUser == null)
-            startActivity(Intent(this, Login::class.java))
-
-        if(Data.loggedUser?.id == null)
-            startActivity(Intent(this, Login::class.java))
     }
 }
