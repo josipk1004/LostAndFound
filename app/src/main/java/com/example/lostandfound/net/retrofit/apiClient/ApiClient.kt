@@ -4,6 +4,7 @@ import android.provider.ContactsContract
 import com.example.lostandfound.entity.NotificationEntity
 import com.example.lostandfound.entity.User
 import com.example.lostandfound.net.retrofit.model.*
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -37,11 +38,11 @@ interface ApiClient {
     fun updateNotification( @Path("id") id: Long, @Body notif: NotificationRequest)
     : Call<NotificationEntity>
 
-    @POST("/send-notification")
-    fun sendPUSH(@Body note: Note, token: String): Call<User>
+    @POST("/{username}/send-notification")
+    fun sendPUSH(@Body note: Note, @Path("username") username: String): Call<User>
 
     @POST("/{username}/setToken")
-    fun setToken(token: String?, @Path("username") username: String?): Call<User>
+    fun setToken(@Body token: String?, @Path("username") username: String?): Call<User>
 
     @GET("/{username}/token")
     fun getUserToken(@Path("username") username: String?): Call<String>

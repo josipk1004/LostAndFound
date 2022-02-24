@@ -28,7 +28,9 @@ class NotificationDetails : AppCompatActivity() {
         }
 
         pushButton.setOnClickListener({
-            startActivity(Intent(this, setPUSH::class.java).putExtra("id", id))
+            Toast.makeText(baseContext, ownerNotificationDetail.text.toString(), Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, setPUSH::class.java).putExtra("user",
+            ownerNotificationDetail.text.toString()))
         })
     }
 

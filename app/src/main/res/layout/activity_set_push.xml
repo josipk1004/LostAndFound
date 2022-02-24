@@ -9,6 +9,14 @@
     >
 
     <EditText
+        android:id="@+id/subject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Enter title" />
+
+    <EditText
         android:id="@+id/contactType1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -70,7 +70,7 @@ class Login : AppCompatActivity() {
             ) {
                 if(response?.isSuccessful == true){
                     Data.setUser(response.body())
-                    startActivity(Intent(this@Login, MainActivity::class.java))
+                    finish()
                 }else{
                     if(response?.code() == 404){
                         val text = "Wrong username or password, please try again or register!"
